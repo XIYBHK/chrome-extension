@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能暗色模式</title>
+    <style>
+        /* 弹窗样式 - 现代化毛玻璃效果 */
+        body {
+            width: 320px;
+            min-height: 400px;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 毛玻璃背景 */
+        .glass-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 主容器 */
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            margin-top: 4px;
+            font-size: 12px;
+            opacity: 0.8;
+            color: #fff;
+        }
+
+        /* 主开关 */
+        .main-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        /* 开关样式 */
+        .switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .switch.active {
+            background: rgba(76, 175, 80, 0.6);
+        }
+
+        .switch-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .switch.active .switch-thumb {
+            transform: translateX(24px);
+        }
+
+        /* 夜间增强选项 */
+        .night-enhanced {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 8px;
+        }
+
+        .night-enhanced input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: #4CAF50;
+        }
+
+        /* 功能卡片 */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .feature-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .feature-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.8;
+        }
+
+        .feature-desc {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        /* 统计信息 */
+        .stats {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
+        }
+
+        /* 底部按钮 */
+        .footer {
+            margin-top: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* 状态指示器 */
+        .status {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 12px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.active {
+            background: #4CAF50;
+        }
+
+        .status-dot.inactive {
+            background: #757575;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* 隐藏状态 */
+        .hidden {
+            display: none !important;
+        }
+
+        /* 小图标 */
+        .icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-background"></div>
+    
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🌙 智能暗色模式</h1>
+            <div class="subtitle">为您的眼睛提供呵护</div>
+        </div>
+
+        <!-- 主开关 -->
+        <div class="main-toggle">
+            <div class="toggle-row">
+                <span class="toggle-label">暗色模式</span>
+                <div class="switch" id="darkModeSwitch">
+                    <div class="switch-thumb"></div>
+                </div>
+            </div>
+            <div class="night-enhanced">
+                <input type="checkbox" id="nightEnhanced">
+                <label for="nightEnhanced">夜间增强模式</label>
+            </div>
+        </div>
+
+        <!-- 悬浮球功能 -->
+        <div class="feature-card">
+            <div class="feature-header">
+                <span class="feature-title">悬浮球控制</span>
+                <div class="switch" id="floatingBallSwitch">
+                    <div class="switch-thumb"></div>
+                </div>
+            </div>
+            <div class="feature-desc">在页面上显示可拖拽的快捷开关</div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="stats">
+            <div class="stats-title">📊 使用统计</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="sitesCount">0</div>
+                    <div class="stat-label">处理网站</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="usageTime">0分钟</div>
+                    <div class="stat-label">使用时长</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部按钮 -->
+        <div class="footer">
+            <button class="btn" id="resetStats">重置统计</button>
+            
+            <!-- 状态显示 -->
+            <div class="status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">准备就绪</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
