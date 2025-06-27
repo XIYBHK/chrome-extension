@@ -1,0 +1,67 @@
+/* Chrome扩展智能暗色模式 - 基础样式文件 */
+/* 简化版本 - 避免性能问题 */
+
+/* 基础重置 */
+html, body {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+/* 主要容器 */
+main, article, section, aside, nav, header, footer {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+    border-color: #333 !important;
+}
+
+/* 文本元素 */
+h1, h2, h3, h4, h5, h6, p, span, div, li {
+    color: #e0e0e0 !important;
+}
+
+/* 表单元素 */
+input, textarea, select, button {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+    border-color: #555 !important;
+}
+
+/* 链接 */
+a {
+    color: #6db3f2 !important;
+}
+
+a:visited {
+    color: #c996cc !important;
+}
+
+a:hover {
+    color: #8cc8ff !important;
+}
+
+/* 代码和预格式化文本 */
+code, pre, kbd, samp {
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+    border-color: #444 !important;
+}
+
+/* 表格 */
+table, th, td {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+    border-color: #444 !important;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+    background-color: #2a2a2a !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555 !important;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1a1a1a !important;
+}
